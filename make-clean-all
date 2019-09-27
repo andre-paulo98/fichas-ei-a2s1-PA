@@ -1,0 +1,4 @@
+for d in /home/user/Desktop/SharedFolder/*/*/; do
+	echo "Running 'make clean' on '$d'"
+	make clean -C $d >>/dev/null
+done
