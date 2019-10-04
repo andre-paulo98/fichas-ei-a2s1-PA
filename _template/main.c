@@ -9,7 +9,7 @@ int main (int argc, char *argv[]) {
 	/* Silencia os warnings */
 	//(void)argc;
 	//(void)argv;
-
+    struct gengetopt_args_info args;
 	if(cmdline_parser(argc, argv, &args))
 		ERROR(1, "Erro: execução de cmdline_parser\n");
 
