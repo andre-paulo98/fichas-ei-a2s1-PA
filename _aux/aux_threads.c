@@ -3,11 +3,16 @@
  * @author Rui Ferreira
  * @version 1.0 
  */
- 
+
+#include <pthread.h>               !!!IMPORTANTE!!!
 
 //**********************************************************************
 // 							criar uma (1) thread
 //**********************************************************************
+
+
+
+
 
 //  Protóptipos
 void *task(void *arg);

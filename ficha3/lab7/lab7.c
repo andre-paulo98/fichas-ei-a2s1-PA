@@ -50,16 +50,11 @@ int main(int argc, char *argv[])
 		if ((errno = pthread_create(&tids[i], NULL, fatorial, &threadParams[i])) != 0) {
 			ERROR(C_ERRO_PTHREAD_CREATE, "pthread_create() failed!");
 		}
-		
-		
-		
-	}
-    
-	// esperar que todas as threads terminem para mostrar resultados
-	for (i = 0; i < MAX; i++) {
+
 		if ((errno = pthread_join(tids[i], NULL)) != 0) {
 			ERROR(C_ERRO_PTHREAD_JOIN, "pthread_join() failed!\n");
 		}
+		
 	}
 
 	// termina contagem de tempo

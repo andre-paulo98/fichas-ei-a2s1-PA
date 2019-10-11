@@ -1,3 +1,5 @@
 Este ficheiro serve apenas para guardar a resposta ao Lab 1:
 Comando(s):
 
+ps -eLf | grep splash$ | grep -v grep | tr -s ' ' | cut -f 6 -d ' '
+
