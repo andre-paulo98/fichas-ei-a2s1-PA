@@ -1,6 +1,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
 
 #include "args.h"
 #include "debug.h"
