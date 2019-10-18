@@ -21,6 +21,7 @@ void *thread_2(void *arg);
 typedef struct 
 {	
     pthread_mutex_t mutex;
+	pthread_cond_t cond;
     
 }thread_params_t;
 
@@ -36,6 +37,9 @@ int main(int argc, char *argv[])
 	/* Inicialização do mutex */
 	if ((errno = pthread_mutex_init(&thread_params.mutex, NULL)) != 0)
 		ERROR(C_ERRO_MUTEX_INIT, "pthread_mutex_init() failed!");
+
+	if ((errno = pthread_cond_init(&thread_params.cond, NULL)) != 0)
+		ERROR(C_ERRO_CONDITION_INIT, "pthread_cond_init() failed!");
 
     /* Cria thread_1 */
 	if ((errno = pthread_create(&t1, NULL, thread_1, &thread_params)) != 0)
@@ -53,7 +57,11 @@ int main(int argc, char *argv[])
 						
 	/* Destroi o mutex */
 	if ((errno = pthread_mutex_destroy(&thread_params.mutex)) != 0)
-		ERROR(C_ERRO_MUTEX_DESTROY, "pthread_mutex_destroy() failed!");			
+		ERROR(C_ERRO_MUTEX_DESTROY, "pthread_mutex_destroy() failed!");
+
+
+	if ((errno = pthread_cond_destroy(&thread_params.cond)) != 0)
+		ERROR(C_ERRO_CONDITION_DESTROY, "pthread_cond_destroy failed!");
 			
     return 0;
 }

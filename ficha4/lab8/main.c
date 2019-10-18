@@ -121,7 +121,7 @@ void *produtor(void *arg)
 		}
 
         /* Adormece entre 0 a 4 segundos */
-        sleep(random() % 5);
+        //sleep(random() % 5);
     }
     return NULL;
 }
@@ -166,7 +166,7 @@ void *consumidor(void *arg)
 		}
 
         /* Adormece entre 0 a 4 segundos */
-        sleep(random() % 5);
+        //sleep(random() % 5);
     }
     return NULL;
 }

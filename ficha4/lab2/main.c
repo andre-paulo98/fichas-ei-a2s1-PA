@@ -68,13 +68,23 @@ int main(int argc, char *argv[])
 void *thread_1(void *arg)
 {
 	thread_params_t *params = (thread_params_t *) arg;	   
-	printf("Thread_1\n");		
+	printf("Thread_1\n");
+
+	if ((errno = pthread_mutex_lock(&params->mutex)) != 0){
+		WARNING("pthread_mutex_lock() failed");
+		return NULL;
+	}
 	
 	usleep(100*(random() % 2));	/* Adormece entre 0 a 100 usecs */
 	int cont = params->contador;
 	sched_yield();
 	usleep(100*(random() % 2));	/* Adormece entre 0 a 100 usecs */
 	params->contador = cont + 2;
+
+	if ((errno = pthread_mutex_unlock(&params->mutex)) != 0){
+		WARNING("pthread_mutex_unlock() failed");
+		return NULL;
+	}
 		
     return NULL;
 }
@@ -85,12 +95,22 @@ void *thread_2(void *arg)
 {
 	thread_params_t *params = (thread_params_t *) arg;	   
 	printf("Thread_2\n");
+
+	if ((errno = pthread_mutex_lock(&params->mutex)) != 0){
+		WARNING("pthread_mutex_lock() failed");
+		return NULL;
+	}
 		
 	usleep(100*(random() % 2));	/* Adormece entre 0 a 100 usecs */
 	int cont = params->contador;
 	sched_yield();
 	usleep(100*(random() % 2));	/* Adormece entre 0 a 100 usecs */
 	params->contador = cont + 4;
+
+	if ((errno = pthread_mutex_unlock(&params->mutex)) != 0){
+		WARNING("pthread_mutex_unlock() failed");
+		return NULL;
+	}
 	  	   
     return NULL;
 }

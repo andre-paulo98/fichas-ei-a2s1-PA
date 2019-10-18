@@ -23,12 +23,16 @@ typedef struct
 
 
 /*  main  */
-int main(int argc, char *argv[]) 
-{
+int main(int argc, char *argv[]) {
     pthread_t t1, t2;
     thread_params_t thread_params;
 
     (void)argc;(void)argv;
+
+	pthread_mutex_t mutex;
+
+	if ((errno = pthread_mutex_init(&mutex, NULL)) != 0)
+		ERROR(C_ERRO_MUTEX_INIT, "pthread_mutex_init() failed");
 
     /* Cria thread_1 */
 	if ((errno = pthread_create(&t1, NULL, thread_1, &thread_params)) != 0)
@@ -43,6 +47,9 @@ int main(int argc, char *argv[])
 		ERROR(C_ERRO_PTHREAD_JOIN, "pthread_join() failed!");	
 	if ((errno = pthread_join(t2, NULL)) != 0)
 		ERROR(C_ERRO_PTHREAD_JOIN, "pthread_join() failed!");
+
+	if ((errno = pthread_mutex_destroy(&mutex)) != 0)
+		ERROR(C_ERRO_MUTEX_DESTROY, "pthread_mutex_destroy() failed");
 			
     return 0;
 }

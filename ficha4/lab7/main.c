@@ -105,8 +105,8 @@ void *task(void *arg)
 	/* a primeira thread sinaliza uma variável de condição, as restantes esperam nessa variável */
 	if (params->id == 1){		
 		/* Notifica threads à espera na variável de condição */
-		if ((errno = pthread_cond_signal(params->cond)) != 0){
-			WARNING("pthread_cond_signal() failed");
+		if ((errno = pthread_cond_broadcast(params->cond)) != 0){
+			WARNING("pthread_cond_broadcast() failed");
 			return NULL;
 		}		
 		printf("Thread %d - $ notificou variável de condição $\n", params->id);			
