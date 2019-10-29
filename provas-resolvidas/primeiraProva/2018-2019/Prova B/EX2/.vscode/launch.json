@@ -1,0 +1,42 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/home/andre/PA/ficha4/labs/lab8/lab8",
+            "args": [
+                ""
+            ],
+            "stopAtEntry": true,
+            "cwd": "/home/andre/PA/ficha4/labs/lab8",
+            "environment": [],
+            "externalConsole": true,
+            "windows": {
+                "MIMode": "gdb",
+                "miDebuggerPath": "/usr/bin/gdb",
+                "setupCommands": [
+                    {
+                        "description": "Enable pretty-printing for gdb",
+                        "text": "-enable-pretty-printing",
+                        "ignoreFailures": true
+                    }
+                ]
+            },
+            "pipeTransport": {
+                "pipeCwd": "",
+                "pipeProgram": "c:\\windows\\sysnative\\bash.exe",
+                "pipeArgs": [
+                    "-c"
+                ],
+                "debuggerPath": "/usr/bin/gdb"
+            },
+            "sourceFileMap": {
+                "/mnt/c": "${env:systemdrive}/",
+                "/mnt/d": "D:\\",
+                "/usr": "C:\\Users\\Andre\\AppData\\Local\\Packages\\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\\LocalState\\rootfs"
+            }
+        }
+    ]
+}
