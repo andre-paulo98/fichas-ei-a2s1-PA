@@ -3,12 +3,12 @@ a) Converta o valor octal 0766 para binário.
 
 Octal = 0766
 
-Binário =  ?
+Binário =  111 110 110
 
 ---------------------------------------------------------------------------------------------
 
 b) Converta o valor octal 011.110.101 para octal.
 
-Binário = 011110101
+Binário = 011 110 101
 
-Octal =  ?
+Octal = 365
