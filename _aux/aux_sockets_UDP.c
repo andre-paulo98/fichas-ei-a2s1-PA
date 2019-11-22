@@ -95,8 +95,10 @@
 	udp_server_endpoint.sin_family = AF_INET;
 	udp_server_endpoint.sin_addr.s_addr = htonl(INADDR_ANY);  	// Todas as interfaces de rede
 	udp_server_endpoint.sin_port = htons(args.port_arg/???);	// Server port
-	if (bind(udp_server_socket, (struct sockaddr *) &udp_server_endpoint, sizeof(struct sockaddr_in)) == -1)
+	if (bind(udp_server_socket, (struct sockaddr *) &udp_server_endpoint, sizeof(struct sockaddr_in)) == -1) {
+		close(udp_client_socket);
 		ERROR(32, "Can't bind @udp_server_endpoint info");
+	}
 		
 	
 	// aqui... a comunicação com o cliente
