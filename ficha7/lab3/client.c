@@ -9,6 +9,7 @@
 
 #include "../debug/debug.h"
 #include "../cmdline/client_cmdline.h"
+#include "common.h"
 
 
 int main(int argc, char *argv[]) 
@@ -46,6 +47,27 @@ int main(int argc, char *argv[])
 	printf("ok. \n");
 
 	// -----------
+
+
+	char num_str[PROTOCOL_MAX_BUFFER];
+	sprintf(num_str, "1234");
+
+	printf("Sent: %s\n", num_str);
+
+	if(send(tcp_client_socket, num_str, strlen(num_str), 0) == -1) {
+		ERROR(1, "send() failed");
+	}
+
+	uint16_t number;
+
+	if(recv(tcp_client_socket, &number, sizeof(uint16_t), 0) == -1) {
+		ERROR(1, "recv() failed");
+	}
+
+	number = ntohs(number);
+	printf("Recieved : %hu\n", number);
+
+
 
 	if (close(tcp_client_socket) == -1)
 		ERROR(45, "Can't close tcp_client_socket (IPv4)");

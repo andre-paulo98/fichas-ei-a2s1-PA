@@ -9,6 +9,7 @@
 
 #include "../debug/debug.h"
 #include "../cmdline/server_cmdline.h"
+#include "common.h"
 
 
 int main(int argc, char *argv[]) 
@@ -52,6 +53,23 @@ int main(int argc, char *argv[])
 
 
 	printf("cliente: %s@%d\n", inet_ntop(AF_INET, &tcp_client_endpoint.sin_addr, tcp_client_string_ip, sizeof(tcp_client_string_ip)), htons(tcp_client_endpoint.sin_port));
+
+	char num_str[PROTOCOL_MAX_BUFFER];
+	ssize_t bytes = recv(tcp_client_socket, num_str, PROTOCOL_MAX_BUFFER, 0);
+	if(bytes == -1) {
+		ERROR(1, "recv() failed");
+	}
+
+	num_str[bytes] = 0; // igual a adicionar o \0 no final da string
+	printf("recieved: %s\n", num_str);
+	uint16_t number = strtol(num_str, NULL, 10);
+
+	printf("Sent: %hu\n", number);
+	number = htons(number);
+
+	if(send(tcp_client_socket, &number, sizeof(uint16_t), 0) == -1) {
+		ERROR(1, "sent() failed");
+	}
 
 
 	if (close(tcp_client_socket) == -1)
