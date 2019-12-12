@@ -23,6 +23,7 @@ int sum = 0;
 struct ThreadParams{
 	int n;
 	pthread_mutex_t mutex;
+    pthread_cond_t cond;
 };
 
 // ----------  MAIN  -------------------
