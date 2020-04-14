@@ -10,7 +10,6 @@
 #include "debug.h"
 #include "comum.h"
 #include "servidor_opt.h"
-#include "my_functions.h"
 
 void processaCliente(int fd);
 
@@ -18,7 +17,7 @@ int main(int argc, char *argv[])
 {
     int ser_fd, cli_fd;
 	socklen_t cli_len;
-    struct sockaddr_in cli_addr;
+    struct sockaddr_in ser_addr, cli_addr;
 
     /* Processa os parâmetros da linha de comando */
     struct gengetopt_args_info args_info;
@@ -27,31 +26,46 @@ int main(int argc, char *argv[])
 	    exit(C_ERRO_CMDLINE);
     }
 
-    // criação do socket para servidor
-    ser_fd = my_tcp_socket();
+    /* cria um socket */
+    if ((ser_fd = socket(AF_INET, SOCK_STREAM, 0)) == 1)
+        ERROR(C_ERRO_SOCKET, "socket");
 
     /* preenche estrutura: ip/porto do servidor */
-    my_bind(ser_fd, INADDR_ANY, args_info.porto_arg);
+    memset(&ser_addr, 0, sizeof(ser_addr));
+    ser_addr.sin_family = AF_INET;
+    ser_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    ser_addr.sin_port = htons(args_info.porto_arg);
 
-    my_tcp_listen(ser_fd, 5);
-
+    /* disponibiliza o porto para escuta */
+    if (bind(ser_fd, (struct sockaddr *) &ser_addr, sizeof(ser_addr)) == -1)
+        ERROR(C_ERRO_BIND, "bind");
+    if (listen(ser_fd, 5) == 1)
+        ERROR(C_ERRO_LISTEN, "Listen");
     printf("Servidor %s no porto %d\n", argv[0], args_info.porto_arg);
 
     /* ciclo infinito para atender todos os clientes */
     while (1) {
-        cli_fd = my_tcp_accept(ser_fd, (struct sockaddr *) &cli_addr);
+	cli_len = sizeof(struct sockaddr);
+        /* accept - bloqueante */
+        cli_fd = accept(ser_fd, (struct sockaddr *) &cli_addr, &cli_len);
+        if (cli_fd < 0){
+            ERROR(C_ERRO_ACCEPT, "Accept");
+	}
 
-        /* mostra informação sobre o cliente e proceasdasdasdsasa pedido */
-        char ip[20];
-        DEBUG("cliente [%s@%d]", inet_ntop(AF_INET, &cli_addr.sin_addr, ip, sizeof(ip)), ntohs(cli_addr.sin_port));
+	/* mostra informação sobre o cliente e processa pedido */
+	char ip[20];
+	DEBUG("cliente [%s@%d]",
+	  inet_ntop(AF_INET, &cli_addr.sin_addr, ip, sizeof(ip)),
+	                                   ntohs(cli_addr.sin_port));
         processaCliente(cli_fd);
-
+        
         /* liberta recursos utilizados com este cliente*/
-        my_close(cli_fd);
+        close(cli_fd);
     }
 
     return (0);
 }
+
 
 
 void processaCliente(int fd) 
@@ -64,7 +78,14 @@ void processaCliente(int fd)
 
     do {
         /* recebe dados do cliente - chamada bloqueante */
-        my_receive(fd, &n_cli, sizeof(uint16_t), 0);
+        int bytes = recv(fd, &n_cli, sizeof(uint16_t), 0);
+        if (bytes == -1)
+            ERROR(C_ERRO_RECV, "recv");
+        if(bytes == 0) {
+            printf("Client closed connection.\n");
+            return;
+        }
+
 
         n_cli = ntohs(n_cli);
 
@@ -78,7 +99,8 @@ void processaCliente(int fd)
         res = htons(res);
 
         /* envia resposta ao cliente */
-        my_send(fd, &res, sizeof(uint16_t), 0);
+        if (send(fd, &res, sizeof(uint16_t), 0) == -1)
+            ERROR(C_ERRO_SEND, "send");
             
     } while (n_cli != n_serv);
 }

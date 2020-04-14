@@ -20,7 +20,8 @@ int main(int argc, char *argv[])
     struct gengetopt_args_info args_info;
     if (cmdline_parser(argc, argv, &args_info) != 0){
 	    fprintf(stderr,"ERROR: cmdline_parser\n");
-	    exit(C_ERRO_CMDLINE);
+	    return 0;
+	    //exit(C_ERRO_CMDLINE);
     }
 
 	/* preenche estrutura: ip/porto do servidor */

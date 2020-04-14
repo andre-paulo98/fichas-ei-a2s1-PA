@@ -29,7 +29,7 @@ CLIENTE=cliente
 CLIENTE_OPT=cliente_opt
 
 # Lista de objectos necessarios para criar o executavel
-CLIENTE_OBJS=cliente.o debug.o ${CLIENTE_OPT}.o  #semaforos.o
+CLIENTE_OBJS=cliente.o debug.o my_functions.o ${CLIENTE_OPT}.o  #semaforos.o
 
 .PHONY: clean
 

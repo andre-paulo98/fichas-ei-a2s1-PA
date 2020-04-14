@@ -1,6 +1,7 @@
-Use o código "server.c" e "common.h" do Lab 6 para iniciar este Lab.
+copie para esta diretoria APENAS os ficheiros:
+ - server.c (Lab 6)
+ - common.h (Lab 6)
+ - client.c (Lab 7)
 
-Use o ficheiro "common.h" para definir constantes a usar na comunicação entre servidor e clientes
-
-nota: o makefile já está preparado para compilar o programa "server.c".
-
+nota 1: use o ficheiro "common.h" para definir constantes a usar nos dois programas.
+nota 2: o makefile já está preparado para compilar os 2 programas.

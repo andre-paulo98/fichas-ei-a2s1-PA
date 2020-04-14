@@ -14,7 +14,7 @@ IFLAGS=-br -brs -npsl -ce -cli4
 
 
 # nome do executavel 
-SERVIDOR=servidor
+SERVIDOR=letter2speed_srv
 
 # Nome do ficheiro de opcoes do gengetopt (caso exista)
 SERVIDOR_OPT=servidor_opt
@@ -23,13 +23,13 @@ SERVIDOR_OPT=servidor_opt
 SERVIDOR_OBJS=servidor.o debug.o my_functions.o ${SERVIDOR_OPT}.o  #semaforos.o
 
 # nome do executavel 
-CLIENTE=cliente
+CLIENTE=letter2speed_clnt
 
 # Nome do ficheiro de opcoes do gengetopt (caso exista)
 CLIENTE_OPT=cliente_opt
 
 # Lista de objectos necessarios para criar o executavel
-CLIENTE_OBJS=cliente.o debug.o ${CLIENTE_OPT}.o  #semaforos.o
+CLIENTE_OBJS=cliente.o debug.o my_functions.o ${CLIENTE_OPT}.o  #semaforos.o
 
 .PHONY: clean
 

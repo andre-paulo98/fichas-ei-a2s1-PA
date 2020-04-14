@@ -1,0 +1,7 @@
+package "Cliente UDP"
+version "1.0"
+purpose "Cliente UDP Adivinha numero"
+option	"ip"	    i	"Endereco IP"	string	no default="127.0.0.1"
+option	"porto"	    p	"Porto"	        int	    no default="9999"
+option  "despesa"   d   "Despesa"       int     yes
+option  "pagamento" P   "Pagamento"     int     yes

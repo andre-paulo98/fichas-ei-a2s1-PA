@@ -1,0 +1,7 @@
+package "Cliente UDP"
+version "1.0"
+purpose "Cliente UDP Adivinha numero"
+option	"ip"	i	"Endereco IP"	string	yes	
+option	"porto"	p	"Porto"	int	yes
+option "letter" l   "Letra Pneu" string yes
+option "timeout" t  "Tempo de espera do servidor" int optional
